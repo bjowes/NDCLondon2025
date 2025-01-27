@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+OneBRC/billion.txt
+OneBRC/million.txt
+OneBRC/thousand.txt

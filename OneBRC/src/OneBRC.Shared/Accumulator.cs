@@ -34,3 +34,4 @@ public class Accumulator
     public float Max => _max;
     public int Count => _count;
 }
+

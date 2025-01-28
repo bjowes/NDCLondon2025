@@ -9,8 +9,16 @@ public static class FastParse {
             }
 
             if (span[0] == (byte)'.') continue;
-                
             value = value * 10 + (span[0] - (byte)'0');
+
+            /* alternative, not much faster 
+            if (span[0] == (byte)'.') {
+                value = value * 1000 + (100 * (span[1] - (byte)'0')) + (10 * (span[2] - (byte)'0')) + (span[3] - (byte)'0');
+                break;
+            } else {
+                value = value * 10 + (span[0] - (byte)'0');
+            }
+                */
         }
 
         return negative ? -value : value;

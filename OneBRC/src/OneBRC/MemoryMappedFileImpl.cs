@@ -20,7 +20,7 @@ public class MemoryMappedFileImpl {
     public unsafe ValueTask Run()
     {
         var size = new FileInfo(_filePath).Length;
-        var threadCount = Environment.ProcessorCount;
+        var threadCount = Environment.ProcessorCount * 8;
 
         using var mmf = MemoryMappedFile.CreateFromFile(_filePath, FileMode.Open, null, 0, MemoryMappedFileAccess.Read);
         using var view = mmf.CreateViewAccessor(0, size, MemoryMappedFileAccess.Read);
@@ -28,7 +28,7 @@ public class MemoryMappedFileImpl {
         var chunks = MemoryMappedFileAnalyzer.Analyze(mmf, size, threadCount);
 
         Parallel.ForEach(chunks, new ParallelOptions {
-            MaxDegreeOfParallelism = threadCount
+            MaxDegreeOfParallelism = Environment.ProcessorCount
          }, chunk => chunk.Run(view));
 
         var dictionary = chunks[0].Dictionary;
